@@ -21,8 +21,6 @@ def key_generation(key):
                 j=0
 
     # to place other alphabets in the key_matrix
-    # the i and j values returned from the previous loop
-    # are again used in this loop, continuing the values in them
     for c in main:
         if c!='.':
             key_matrix[i]+=c
@@ -33,7 +31,7 @@ def key_generation(key):
                 j=0
                 
     return(key_matrix)
-# Now plaintext is to be converted into cipher text
+# Now plaintext is to be converted into cipher text. HELP FROM Abhiramborige
 
 def conversion(plain_text):
     # seggrigating the maeesage into pairs
@@ -63,3 +61,84 @@ def conversion(plain_text):
         else:
             # else the next letter will be pair with the previous letter
             b=plain_text[i+1]
+        if(a!=b):
+            plain_text_pairs.append(a+b)
+            # if not equal then leave the next letter,
+            # as it became pair with previous alphabet
+            i+=2
+        else:
+            plain_text_pairs.append(a+'x')
+            # else dont leave the next letter and put x
+            # in place of repeated letter and conitnue with the next letter
+            # which is repeated (according to algo)
+            i+=1
+            
+    print("plain text pairs: ",plain_text_pairs)
+
+
+    for pair in plain_text_pairs:
+        # RULE2: if the letters are in the same row, replace them with
+        # letters to their immediate right respectively
+        flag=False
+        for row in key_matrix:
+            if(pair[0] in row and pair[1] in row):
+                # find will return index of a letter in string
+                j0=row.find(pair[0])
+                j1=row.find(pair[1])
+                cipher_text_pair=row[(j0+1)%5]+row[(j1+1)%5]
+                cipher_text_pairs.append(cipher_text_pair)
+                flag=True
+        if flag:
+            continue
+
+        # RULE3: if the letters are in the same column, replace them with
+        # letters to their immediate below respectively
+                
+        for j in range(5):
+            col="".join([key_matrix[i][j] for i in range(5)])
+            if(pair[0] in col and pair[1] in col):
+                # find will return index of a letter in string
+                i0=col.find(pair[0])
+                i1=col.find(pair[1])
+                cipher_text_pair=col[(i0+1)%5]+col[(i1+1)%5]
+                cipher_text_pairs.append(cipher_text_pair)
+                flag=True
+        if flag:
+            continue
+        #RULE:4 if letters are not on the same row or column,
+        # replace with the letters on the same row respectively but
+        # at the other pair of corners of rectangle,
+        # which is defined by the original pair
+
+        i0=0
+        i1=0
+        j0=0
+        j1=0
+
+        for i in range(5):
+            row=key_matrix[i]
+            if(pair[0] in row):
+                i0=i
+                j0=row.find(pair[0])
+            if(pair[1] in row):
+                i1=i
+                j1=row.find(pair[1])
+        cipher_text_pair=key_matrix[i0][j1]+key_matrix[i1][j0]
+        cipher_text_pairs.append(cipher_text_pair)
+        
+    print("cipher text pairs: ",cipher_text_pairs)
+    # final statements
+    print('plain text: ',plain_text)
+    print('cipher text: ',"".join(cipher_text_pairs))
+
+
+key=input("Give the key: ")
+
+# calling first function
+key_matrix=key_generation(key)
+print("Matrix for encryption, in rows:")
+print(key_matrix)
+plain_text=input("Give the message: ")
+
+# calling second function
+conversion(plain_text)
