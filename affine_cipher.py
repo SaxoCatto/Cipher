@@ -34,8 +34,8 @@ def calcdec(c, a, b):
 def encryption(p, a, b):
     """
         encryption(p, a, b) -> str
-        Encrypts a given plaintext using the Affine Cipher with specified key parameters 'a' and 'b'.
-        Returns the encrypted ciphertext.
+        Encrypts a given plaintext using the Affine Cipher with key parameters 'a' and 'b'.
+        Returns the encrypted.
     """
     result = ""
     for char in p:
@@ -49,8 +49,8 @@ def encryption(p, a, b):
 def decryption(c, a, b):
     """
         decryption(c, a, b) -> str
-        Decrypts a given ciphertext using the Affine Cipher with specified key parameters 'a' and 'b'.
-        Returns the decrypted plaintext.
+        Decrypts a given ciphertext using the Affine Cipher with key parameters 'a' and 'b'.
+        Returns the decrypted.
     """
     result = ""
     for char in c:
@@ -64,8 +64,7 @@ def decryption(c, a, b):
 if __name__ == "__main__":
     """
         Command-Line Interface
-        Parses command-line arguments, performs input validation, and executes encryption or
-        decryption based on user input. Provides informative error messages and usage instructions.
+        hope this runs lmao
     """
     
     lower = string.ascii_lowercase
@@ -108,3 +107,6 @@ if __name__ == "__main__":
         print(decryption(args[2], a, b))
     else:
         print(f"{red}!Error: {endc}Invalid type of operation")
+
+
+# HELP amaitou
