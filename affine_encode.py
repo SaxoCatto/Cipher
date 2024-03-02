@@ -13,8 +13,9 @@ def are_coprime(a, m):
 
 def keyinverse(a, m):
     """
-        Finds the modular inverse of 'a' modulo 'm' if 'a' is coprime to 'm'.
-        Raises a ValueError if the inverse does not exist. Returns the computed modular inverse.
+        Finds the modular inverse of 'a' modulo 'm' if 'a' is coprime to 'm'. Based on 
+Extended Euclid theory thingy.
+        Raises a ValueError if the inverse does not exist. 
     """
     if not are_coprime(a, m):
         raise ValueError("The 'a' value must be coprime to 26.")
@@ -24,17 +25,16 @@ def keyinverse(a, m):
     raise ValueError("Inverse does not exist for the given 'a' value.")
 
 def calcenc(c, a, b):
-    # Performs encryption for a single character using the Affine Cipher formula.
+    # Performs encryption for a single character using the Affine Cipher thingy.
     return (a * c + b) % 26
 
 def calcdec(c, a, b):
-    # Decryption for a single character using the Affine Cipher formula.
+    # Decryption for a single character using the Affine Cipher thingy.
     return (keyinverse(a, 26) * (c - b)) % 26
 
 def encryption(p, a, b):
     """
         encryption(p, a, b) -> str
-        Encrypts a given plaintext using the Affine Cipher with key parameters 'a' and 'b'.
         Returns the encrypted.
     """
     result = ""
@@ -45,22 +45,18 @@ def encryption(p, a, b):
         else:
             result += char
     return result
-
+"""
 def decryption(c, a, b):
-    """
         decryption(c, a, b) -> str
-        Decrypts a given ciphertext using the Affine Cipher with key parameters 'a' and 'b'.
         Returns the decrypted.
-    """
     result = ""
     for char in c:
         if char.isalpha():
-            base = lower if char.islower() else upper
-            result += base[calcdec(base.index(char), a, b)]
+
         else:
             result += char
     return result
-
+"""
 if __name__ == "__main__":
     """
         Command-Line Interface
@@ -79,10 +75,13 @@ if __name__ == "__main__":
     if len(sys.argv) < 5:
         print(f"{red}! Usage: {endc}python3 affinecipher.py <type> <string> <a> <b>")
         print('''
-        - type    : {e: encryption, d: decryption}
-        - string  : the text you want to encrypt or decrypt
+        - type    : e for encryption
+                    d for decryption (not working atm?)
+        - string  : desired message
         - a       : the first operand of the key
         - b       : the second operand of the key
+
+    Further infomation about Affine cipher: https://en.wikipedia.org/wiki/Affine_cipher
     ''')
         print(f"{yellow}* Note: {endc}make sure 'a' is coprime to 26 for a valid Affine Cipher")
         print(f"{yellow}* Note: {endc}make sure you add double quotes in case the string has whitespaces")
