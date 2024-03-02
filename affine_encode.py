@@ -18,11 +18,11 @@ Extended Euclid theory thingy.
         Raises a ValueError if the inverse does not exist. 
     """
     if not are_coprime(a, m):
-        raise ValueError("The 'a' value must be coprime to 26.")
+        raise ValueError("The 'a' is not coprime to 26. Please change it")
     for i in range(1, m):
         if (a * i) % m == 1:
             return i
-    raise ValueError("Inverse does not exist for the given 'a' value.")
+    raise ValueError("Inverse does not exist for the given 'a' value. How did you get here")
 
 def calcenc(c, a, b):
     # Performs encryption for a single character using the Affine Cipher thingy.
@@ -45,18 +45,21 @@ def encryption(p, a, b):
         else:
             result += char
     return result
-"""
+
 def decryption(c, a, b):
+    """
         decryption(c, a, b) -> str
         Returns the decrypted.
+    """
     result = ""
     for char in c:
         if char.isalpha():
-
+            base = lower if char.islower() else upper
+            result += base[calcdec(base.index(char), a, b)]
         else:
             result += char
     return result
-"""
+
 if __name__ == "__main__":
     """
         Command-Line Interface
@@ -108,4 +111,4 @@ if __name__ == "__main__":
         print(f"{red}!Error: {endc}Invalid type of operation")
 
 
-# HELP amaitou
+# HELP from halfw
